@@ -1,23 +1,18 @@
 package dbp.hackathon.email.event;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
+
+import dbp.hackathon.email.domain.EmailService;
+
 public class EmailListener {
-    public void onEmailReceived(EmailEvent emailEvent) {
-        System.out.println("Email received: " + emailEvent.getEmail());
-    }
+    @Autowired
+    private EmailService emailService;
 
-    public void onEmailSent(EmailEvent emailEvent) {
-        System.out.println("Email sent: " + emailEvent.getEmail());
-    }
-
-    public void onEmailDeleted(EmailEvent emailEvent) {
-        System.out.println("Email deleted: " + emailEvent.getEmail());
-    }
-
-    public void onEmailRead(EmailEvent emailEvent) {
-        System.out.println("Email read: " + emailEvent.getEmail());
-    }
-
-    public void onEmailUnread(EmailEvent emailEvent) {
-        System.out.println("Email unread: " + emailEvent.getEmail());
+    @EventListener
+    @Async
+    public void handleEmailEvent(EmailEvent emailEvent) {
+        emailService.sendEmail(emailEvent.getEmail(), emailEvent.getContent(), emailEvent.getSubject());
     }
 }
