@@ -1,4 +1,3 @@
-//commit 1
 package dbp.hackathon.email.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
